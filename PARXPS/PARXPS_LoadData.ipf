@@ -5,6 +5,11 @@ Function PARXPS_Load(ba) : ButtonControl
 		case 2: // mouse up
 		  String pathName = OpenFileDialog()
       
+      if(strlen(pathName) == 0)
+        return -1
+      endif
+
+      PARXPS_LoadWavesFromFile(pathName)
 			break
 	endswitch
 
@@ -24,7 +29,13 @@ Static Function/S OpenFileDialog()
   return outputPath // Will be empty if user canceled
 End
 
-Function PARXPS_LoadWavesFromFile()
+Function PARXPS_Testing(pathName)
+  String pathName
+  LoadWave pathName
+END
+
+Function PARXPS_LoadWavesFromFile(pathName)
+String pathName
 variable i, j, jmax,k
 String NullString=""
 String NullList="-1"
@@ -33,7 +44,7 @@ string OldScanWaveString="StartValue"
 jmax=1
 j=1
 for(i=0; i<100; i+=1)
-	LoadWave/A=ScanWaveName/J/D/K=2/L={0,0,1,i,1} pathname
+	LoadWave/A=ScanWaveName/J/D/K=2/L={0,0,1,i,1} pathName
 	wave/T ScanWaveName0
 	ScanWaveString=ScanWaveName0[0]
 	killwaves ScanWaveName0
